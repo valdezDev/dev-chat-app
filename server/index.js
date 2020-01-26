@@ -1,6 +1,6 @@
-const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
+const http = require('http');
 
 const PORT = process.env.PORT || 5000;
 
@@ -11,10 +11,20 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket) => {
-  console.log('user connected');
+  console.log('a user connected');
+
+  socket.on('join', ({ name, room }, callback) => {
+    console.log(name, room);
+
+    const error = true;
+
+    if (error) {
+      callback({ error: 'error' });
+    }
+  });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    console.log('user disconnected. . . ');
   });
 });
 
